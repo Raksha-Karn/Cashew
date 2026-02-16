@@ -1,8 +1,3 @@
-expenses = {}
-
-
-
-
 def main():
     while True:
         prompt = input("""\n================================
@@ -12,14 +7,16 @@ def main():
 Current Balance: $2,450.00
 
 --- MAIN MENU ---
-1. Add Transaction
-2. View All Transactions
-3. View Summary
-4. Filter Transactions
-5. Monthly Report
-6. Export to CSV
-7. Exit
+0. Add Transactions
+1. View All Transactions
+2. Manage Transaction Category
+3. View Categories
+4. View Summary
+5. Filter Transactions
+6. Monthly Report
+7. Export to CSV
+8. Exit
 
-Enter your choice (1-7): _""")
+Enter your choice (1-8): _""")
 
 main()
