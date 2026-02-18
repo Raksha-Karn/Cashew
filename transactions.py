@@ -227,5 +227,94 @@ class TransactionManager:
         print(f"Transactions exported successfully to {filename}")
 
 
+    def monthly_report(self):
+        from collections import defaultdict
 
+        all_transactions = self.transactions["Income"] + self.transactions["Expense"]
 
+        if not all_transactions:
+            print("\nNo transactions available to generate report.")
+            return
+
+        try:
+            year = int(input("Enter year (YYYY): "))
+            month = int(input("Enter month (1-12): "))
+
+            if month < 1 or month > 12:
+                print("Invalid month. Must be between 1 and 12.")
+                return
+
+        except ValueError:
+            print("Invalid input. Year and month must be numbers.")
+            return
+
+        current_month_txns = [
+            txn for txn in all_transactions
+            if txn["Date"].year == year and txn["Date"].month == month
+        ]
+
+        if not current_month_txns:
+            print("\nNo transactions found for this month.")
+            return
+
+        total_income = 0
+        total_expense = 0
+
+        income_by_category = defaultdict(float)
+        expense_by_category = defaultdict(float)
+
+        for txn in current_month_txns:
+            if txn["Type"] == "Income":
+                total_income += txn["Amount"]
+                income_by_category[txn["Category"]] += txn["Amount"]
+            else:
+                total_expense += txn["Amount"]
+                expense_by_category[txn["Category"]] += txn["Amount"]
+
+        print(f"\n===== MONTHLY REPORT: {year}-{month:02d} =====")
+        print(f"Total Income : ${total_income:.2f}")
+        print(f"Total Expense: ${total_expense:.2f}")
+        print(f"Net Savings  : ${(total_income - total_expense):.2f}")
+        print("--------------------------------------------")
+
+        print("\nExpense Breakdown by Category:")
+        for category, amount in expense_by_category.items():
+            print(f"{category}: ${amount:.2f}")
+
+        if expense_by_category:
+            highest_category = max(expense_by_category, key=expense_by_category.get)
+            highest_amount = expense_by_category[highest_category]
+            print(f"\nHighest Expense Category: {highest_category} (${highest_amount:.2f})")
+        else:
+            print("\nNo expenses recorded this month.")
+
+        if month == 1:
+            prev_month = 12
+            prev_year = year - 1
+        else:
+            prev_month = month - 1
+            prev_year = year
+
+        previous_month_txns = [
+            txn for txn in all_transactions
+            if txn["Date"].year == prev_year and txn["Date"].month == prev_month
+        ]
+
+        if not previous_month_txns:
+            print("\nNo data available for previous month comparison.")
+        else:
+            prev_income = sum(
+                txn["Amount"] for txn in previous_month_txns
+                if txn["Type"] == "Income"
+            )
+            prev_expense = sum(
+                txn["Amount"] for txn in previous_month_txns
+                if txn["Type"] == "Expense"
+            )
+
+            print("\n----- Comparison with Previous Month -----")
+            print(f"Previous Month ({prev_year}-{prev_month:02d})")
+            print(f"Income Change : ${total_income - prev_income:.2f}")
+            print(f"Expense Change: ${total_expense - prev_expense:.2f}")
+
+        print("==========================================\n")
