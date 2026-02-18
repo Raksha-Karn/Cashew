@@ -117,7 +117,7 @@ def main():
             filename = input("Enter filename (default: transactions.csv): ").strip()
             if filename == "":
                 filename = "transactions.csv"
-            transaction_manager.export_to_csv(filename)
+            transaction_manager.export_to_csv(filename + ".csv")
         elif choice == "8":
             print("Exiting... Saving data.")
             transaction_manager.save_to_file(DATA_FILE)
