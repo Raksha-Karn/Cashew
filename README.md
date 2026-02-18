@@ -5,27 +5,37 @@ A simple and powerful **command-line interface (CLI) Personal Finance Tracker** 
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-<div align="center">
+- Welcome Prompt
+![1](screenshots/first.png)
 
-<img src="screenshots/first.png" width="45%" />
-<img src="screenshots/second.png" width="45%" />
+- Add Transaction
+![2](screenshots/second.png)
 
-<img src="screenshots/third.png" width="45%" />
-<img src="screenshots/fourth.png" width="45%" />
+- View Transactions
+![3](screenshots/third.png)
 
-<img src="screenshots/fifth.png" width="45%" />
-<img src="screenshots/sixth.png" width="45%" />
+- Manage Categories
+![4](screenshots/fourth.png)
 
-<img src="screenshots/seventh.png" width="45%" />
-<img src="screenshots/eigtth.png" width="45%" />
+- Financial Summary
+![5](screenshots/fifth.png)
 
-<img src="screenshots/ninth.png" width="45%" />
-<img src="screenshots/tenth.png" width="45%" />
+- Filter Transactions
+![6](screenshots/sixth.png)
 
-</div>
+- Monthly Report
+![7](screenshots/seventh.png)
 
+- Export to CSV
+![8](screenshots/eigtth.png)
+
+- JSON Data
+![9](screenshots/ninth.png)
+
+- Store Data Persistenly
+![10](screenshots/tenth.png)
 
 ## 🚀 Features
 
