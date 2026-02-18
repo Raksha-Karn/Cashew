@@ -137,8 +137,8 @@ A simple and powerful **command-line interface (CLI) Personal Finance Tracker** 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/cli-personal-finance-tracker.git
-cd cli-personal-finance-tracker
+git clone https://github.com/Raksha-Karn/Cashew.git
+cd cli_based_finance_tracker
 ```
 2. Run the program:
  ```bash
