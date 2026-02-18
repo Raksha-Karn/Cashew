@@ -3,16 +3,18 @@ import uuid
 
 
 class TransactionManager:
-    def __init__(self):
+    def __init__(self, budget, category_manager):
         self.balance = 0
         self.transactions = {
             "Income": [],
             "Expense": []
         }
+        self.budget = budget
+        self.category_manager = category_manager
 
     def add_transaction(self):
         while True:
-            choice = input("Enter Type of Transaction(Income/Expense)\nEnter(1-2)\n1.Income\n2.Expense\n3.Exit")
+            choice = input("Enter Type of Transaction(Income/Expense)\nEnter(1-2)\n1.Income\n2.Expense\n3.Exit").strip()
             if choice == "3":
                 break
             if choice not in ["1","2"]:
@@ -21,10 +23,29 @@ class TransactionManager:
 
             category_type = "Income" if choice == "1" else "Expense"
             example = "salary, stipend" if choice == "1" else "food, rent"
-            category = input(f"Enter {category_type} Category (ex. {example}): ").title()
+            print(f"\nAvailable {category_type} Categories:")
+            if self.category_manager.categories[category_type]:
+                for i, cat in enumerate(self.category_manager.categories[category_type], start=1):
+                    print(f"{i}. {cat}")
+                category = input(f"Enter category number or type a new category (ex. {example}): ").title()
+            else: 
+                category = input(f"Category (ex. {example}): ")
+
+            if category.isdigit():
+                index = int(category) - 1
+                if 0 <= index < len(self.category_manager.categories[category_type]):
+                    category = self.category_manager.categories[category_type][index]
+                else:
+                    print("Invalid number, try again.")
+                    continue
+            else:
+                category = category.title()
+                self.category_manager.categories[category_type].append(category)
+                print(f"New {category_type} category '{category}' created and linked!")
+
             while True:
                 try:
-                    amount = float("Amount: ")
+                    amount = float(input("Amount: "))
                     if amount <= 0:
                         print("Amount must be positive. Try again!")
                         continue
@@ -45,7 +66,7 @@ class TransactionManager:
                         print("Invalid date format! Use YYYY-MM-DD. Try again!")
 
             transaction = {
-                "Id": uuid.uuid4(),
+                "Id": str(uuid.uuid4()),
                 "Category": category,
                 "Type": category_type,
                 "Amount": amount,
@@ -58,9 +79,38 @@ class TransactionManager:
                 self.balance += amount
             else:
                 self.balance -= amount
-            print("Transaction added successfully!")
-            print(f"Your Balance: {self.balance:.2f}")
+            print("\nTransaction added successfully! Details:")
+            print(f"ID         : {transaction['Id']}")
+            print(f"Type       : {transaction['Type']}")
+            print(f"Category   : {transaction['Category']}")
+            print(f"Amount     : {transaction['Amount']:.2f}")
+            print(f"Description: {transaction['Description'] if description else 'None'}")
+            print(f"Date       : {transaction['Date']}")
+            print(f"Current Balance: ${self.balance:.2f}\n")
 
 
-    def transaction_info(self):
-        pass
+    def view_all_transactions(self, sort_by_category=False):
+        all_transactions = self.transactions["Income"] + self.transactions["Expense"]
+
+        if not all_transactions:
+            print("\nNo transactions to show.")
+            return
+
+        if sort_by_category:
+            all_transactions = sorted(all_transactions, key=lambda x: x["Category"])
+
+        print("\n| ID                                   | Type    | Category        | Amount     | Description                      | Date       |")
+        print("|--------------------------------------+---------|----------------|------------|----------------------------------|------------|")
+
+        for txn in all_transactions:
+            txn_id = str(txn["Id"])[:8]  
+            txn_type = txn["Type"]
+            category = txn["Category"]
+            amount = f"{txn['Amount']:.2f}"
+            desc = txn["Description"] if txn["Description"] else "None"
+            date = txn["Date"]
+
+            print(f"| {txn_id:<36} | {txn_type:<7} | {category:<14} | {amount:<10} | {desc:<32} | {date} |")
+
+        print("|--------------------------------------+---------|----------------|------------|----------------------------------|------------|")
+
