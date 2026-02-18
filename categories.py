@@ -13,7 +13,7 @@ class CategoryManager:
                 "2. Add Expense Category\n"
                 "3. Exit\n"
                 "Choice: "
-            )
+            ).strip()
 
             if choice == "3":
                 break
@@ -91,4 +91,43 @@ class CategoryManager:
                     break
                 else:
                     print("Category does not exist!")
+
+
+category_manager = CategoryManager()
+
+while True:
+    try:
+        option = input(
+            "\nWhat would you like to do?\n"
+            "1. Add Category\n"
+            "2. Remove Category\n"
+            "3. View All Categories\n"
+            "4. View Categories By Type\n"
+            "5. Exit\n"
+            "Choice: "
+        )
+    except ValueError:
+        print("Invalid input! Please enter a number (1-5).")
+        continue
+
+    if option == "5":
+        print("Exiting...")
+        break
+
+    if option == "1":
+        category_manager.add_categories()
+    elif option == "2":
+        category_manager.remove_categories()
+    elif option == "3":
+        category_manager.view_all_categories()
+    elif option == "4":
+        type_choice = input("Enter type (Income/Expense): ").title()
+        if type_choice not in ["Income", "Expense"]:
+            print("Invalid type!")
+            continue
+        category_manager.view_categories_by_type(type_choice)
+  
+
+
+
             
