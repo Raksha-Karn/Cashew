@@ -1,6 +1,11 @@
 
 # 🏦 CLI Personal Finance Tracker
 
+# CLI Finance Tracker
+
+[![PyPI](https://img.shields.io/pypi/v/raksha-finance-tracker?color=brightgreen&label=PyPI)](https://pypi.org/project/finance-tracker/)
+
+
 A simple and powerful **command-line interface (CLI) Personal Finance Tracker** that helps you manage your income, expenses, and budget efficiently. Track transactions, view summaries, generate monthly reports, filter data, and export to CSV — all from your terminal!  
 
 ---

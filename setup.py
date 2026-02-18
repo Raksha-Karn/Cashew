@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="finance-tracker",           
+    name="raksha-finance-tracker",           
     version="0.1.0",
     packages=find_packages(),
     install_requires=[],
