@@ -114,3 +114,91 @@ class TransactionManager:
 
         print("|--------------------------------------+---------|----------------|------------|----------------------------------|------------|")
 
+    def view_transaction_summary(self):
+        income_transactions = sum(transaction["Amount"] for transaction in self.transactions["Income"])
+        expense_transactions = sum(transaction["Amount"] for transaction in self.transactions["Expense"])
+        
+        print("\n===== FINANCIAL SUMMARY =====")
+        print(f"Total Income : ${income_transactions:.2f}")
+        print(f"Total Expense: ${expense_transactions:.2f}")
+        print(f"Balance      : ${self.balance:.2f}")
+        print(f"Transactions : {len(self.transactions['Income']) + len(self.transactions['Expense'])}")
+        print("=============================\n")
+
+    def filter_transactions(self):
+        all_transactions = self.transactions["Income"] + self.transactions["Expense"]
+
+        if not all_transactions:
+            print("\nNo transactions available.")
+            return
+
+        print("\nFilter By:")
+        print("1. Type (Income / Expense)")
+        print("2. Category")
+        print("3. Date Range")
+        print("4. Amount Range")
+        print("5. Back")
+
+        choice = input("Select option (1-5): ").strip()
+
+        filtered = all_transactions
+
+        if choice == "1":
+            txn_type = input("Enter type (Income/Expense): ").title()
+            if txn_type not in ["Income", "Expense"]:
+                print("Invalid type.")
+                return
+            filtered = [txn for txn in filtered if txn["Type"] == txn_type]
+
+        elif choice == "2":
+            category = input("Enter category: ").title()
+            filtered = [txn for txn in filtered if txn["Category"] == category]
+
+        elif choice == "3":
+            import datetime
+            try:
+                start_input = input("Start date (YYYY-MM-DD): ")
+                end_input = input("End date (YYYY-MM-DD): ")
+
+                start_date = datetime.datetime.strptime(start_input, "%Y-%m-%d").date()
+                end_date = datetime.datetime.strptime(end_input, "%Y-%m-%d").date()
+
+                filtered = [
+                    txn for txn in filtered
+                    if start_date <= txn["Date"] <= end_date
+                ]
+            except ValueError:
+                print("Invalid date format.")
+                return
+
+        elif choice == "4":
+            try:
+                min_amount = float(input("Minimum amount: "))
+                max_amount = float(input("Maximum amount: "))
+
+                filtered = [
+                    txn for txn in filtered
+                    if min_amount <= txn["Amount"] <= max_amount
+                ]
+            except ValueError:
+                print("Invalid amount input.")
+                return
+
+        elif choice == "5":
+            return
+
+        else:
+            print("Invalid option.")
+            return
+
+        if not filtered:
+            print("\nNo matching transactions found.")
+            return
+
+        print("\n===== FILTERED TRANSACTIONS =====")
+        for txn in filtered:
+            print(f"{txn['Date']} | {txn['Type']} | {txn['Category']} | ${txn['Amount']:.2f} | {txn['Description']}")
+        print("=================================\n")
+
+
+
