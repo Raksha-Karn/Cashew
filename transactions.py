@@ -1,5 +1,6 @@
 import datetime
 import uuid
+import csv
 
 
 class TransactionManager:
@@ -199,6 +200,32 @@ class TransactionManager:
         for txn in filtered:
             print(f"{txn['Date']} | {txn['Type']} | {txn['Category']} | ${txn['Amount']:.2f} | {txn['Description']}")
         print("=================================\n")
+
+
+    def export_to_csv(self, filename="transactions.csv"):
+        all_transactions = self.transactions["Income"] + self.transactions["Expense"]
+
+        if not all_transactions:
+            print("No transactions to export.")
+            return
+
+        with open(filename, mode="w", newline="") as file:
+            fieldnames = ["ID", "Type", "Category", "Amount", "Description", "Date"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+
+            for txn in all_transactions:
+                writer.writerow([
+                    txn["Id"],
+                    txn["Type"],
+                    txn["Category"],
+                    txn["Amount"],
+                    txn["Description"],
+                    txn["Date"]
+                ])
+
+        print(f"Transactions exported successfully to {filename}")
+
 
 
 
