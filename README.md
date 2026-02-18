@@ -1,8 +1,6 @@
 
 # 🏦 CLI Personal Finance Tracker
 
-# CLI Finance Tracker
-
 [![PyPI](https://img.shields.io/pypi/v/raksha-finance-tracker?color=brightgreen&label=PyPI)](https://pypi.org/project/finance-tracker/)
 
 
