@@ -1,16 +1,18 @@
 import datetime
 import uuid
 import csv
+import json
 
+DATA_FILE = "finance_data.json"
 
 class TransactionManager:
-    def __init__(self, budget, category_manager):
-        self.balance = 0
+    def __init__(self, initial_balance, budget, category_manager):
+        self.balance = initial_balance
+        self.budget = budget
         self.transactions = {
             "Income": [],
             "Expense": []
         }
-        self.budget = budget
         self.category_manager = category_manager
 
     def add_transaction(self):
@@ -80,6 +82,19 @@ class TransactionManager:
                 self.balance += amount
             else:
                 self.balance -= amount
+
+                today = datetime.date.today()
+
+                monthly_expense = sum(
+                        txn["Amount"]
+                        for txn in self.transactions["Expense"]
+                        if txn["Date"].year == today.year and txn["Date"].month == today.month
+                )
+
+                if monthly_expense > self.budget:
+                    print("Monthly budget exceeded!")
+
+
             print("\nTransaction added successfully! Details:")
             print(f"ID         : {transaction['Id']}")
             print(f"Type       : {transaction['Type']}")
@@ -88,6 +103,9 @@ class TransactionManager:
             print(f"Description: {transaction['Description'] if description else 'None'}")
             print(f"Date       : {transaction['Date']}")
             print(f"Current Balance: ${self.balance:.2f}\n")
+
+            self.save_to_file(DATA_FILE)
+
 
 
     def view_all_transactions(self, sort_by_category=False):
@@ -216,12 +234,15 @@ class TransactionManager:
 
             for txn in all_transactions:
                 writer.writerow([
-                    txn["Id"],
-                    txn["Type"],
-                    txn["Category"],
-                    txn["Amount"],
-                    txn["Description"],
-                    txn["Date"]
+                    writer.writerow({
+                        "ID": txn["Id"],
+                        "Type": txn["Type"],
+                        "Category": txn["Category"],
+                        "Amount": txn["Amount"],
+                        "Description": txn["Description"],
+                        "Date": txn["Date"]
+                    })
+
                 ])
 
         print(f"Transactions exported successfully to {filename}")
@@ -278,8 +299,12 @@ class TransactionManager:
         print("--------------------------------------------")
 
         print("\nExpense Breakdown by Category:")
-        for category, amount in expense_by_category.items():
-            print(f"{category}: ${amount:.2f}")
+        if expense_by_category:
+            print("\nExpense Breakdown by Category:")
+            for category, amount in expense_by_category.items():
+                print(f"{category}: ${amount:.2f}")
+        else:
+            print("\nNo expenses recorded this month.")
 
         if expense_by_category:
             highest_category = max(expense_by_category, key=expense_by_category.get)
@@ -318,3 +343,45 @@ class TransactionManager:
             print(f"Expense Change: ${total_expense - prev_expense:.2f}")
 
         print("==========================================\n")
+
+    def save_to_file(self, filename="finance_data.json"):
+        data = {
+            "balance": self.balance,
+            "budget": self.budget,
+            "transactions": {
+                "Income": [],
+                "Expense": []
+            }
+        }
+
+        for txn_type in ["Income", "Expense"]:
+            for txn in self.transactions[txn_type]:
+                txn_copy = txn.copy()
+                txn_copy["Date"] = txn_copy["Date"].isoformat()
+                data["transactions"][txn_type].append(txn_copy)
+
+        with open(filename, "w") as file:
+            json.dump(data, file, indent=4)
+
+    def load_from_file(self, filename="finance_data.json"):
+        try:
+            with open(filename, "r") as file:
+                data = json.load(file)
+
+            self.balance = data["balance"]
+            self.budget = data["budget"]
+            self.transactions = {"Income": [], "Expense": []}
+
+            for txn_type in ["Income", "Expense"]:
+                for txn in data["transactions"][txn_type]:
+                    txn["Date"] = datetime.datetime.strptime(
+                        txn["Date"], "%Y-%m-%d"
+                    ).date()
+                    self.transactions[txn_type].append(txn)
+
+            print("Data loaded successfully.")
+
+        except FileNotFoundError:
+            print("No previous data found. Starting fresh.")
+
+
