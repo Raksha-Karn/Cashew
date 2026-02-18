@@ -5,6 +5,28 @@ A simple and powerful **command-line interface (CLI) Personal Finance Tracker** 
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+<img src="screenshots/first.png" width="45%" />
+<img src="screenshots/second.png" width="45%" />
+
+<img src="screenshots/third.png" width="45%" />
+<img src="screenshots/fourth.png" width="45%" />
+
+<img src="screenshots/fifth.png" width="45%" />
+<img src="screenshots/sixth.png" width="45%" />
+
+<img src="screenshots/seventh.png" width="45%" />
+<img src="screenshots/eigtth.png" width="45%" />
+
+<img src="screenshots/ninth.png" width="45%" />
+<img src="screenshots/tenth.png" width="45%" />
+
+</div>
+
+
 ## 🚀 Features
 
 ### 1. Add Transactions
