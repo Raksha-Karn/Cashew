@@ -5,37 +5,76 @@ A simple and powerful **command-line interface (CLI) Personal Finance Tracker** 
 
 ---
 
-## Screenshots
+## 📸 Screenshots
 
-- Welcome Prompt
-![1](screenshots/first.png)
+### 1️⃣ Welcome Prompt
+<p align="center">
+  <img src="screenshots/first.png" width="75%">
+</p>
 
-- Add Transaction
-![2](screenshots/second.png)
+---
 
-- View Transactions
-![3](screenshots/third.png)
+### 2️⃣ Add Transaction
+<p align="center">
+  <img src="screenshots/second.png" width="75%">
+</p>
 
-- Manage Categories
-![4](screenshots/fourth.png)
+---
 
-- Financial Summary
-![5](screenshots/fifth.png)
+### 3️⃣ View Transactions
+<p align="center">
+  <img src="screenshots/third.png" width="75%">
+</p>
 
-- Filter Transactions
-![6](screenshots/sixth.png)
+---
 
-- Monthly Report
-![7](screenshots/seventh.png)
+### 4️⃣ Manage Categories
+<p align="center">
+  <img src="screenshots/fourth.png" width="75%">
+</p>
 
-- Export to CSV
-![8](screenshots/eigtth.png)
+---
 
-- JSON Data
-![9](screenshots/ninth.png)
+### 5️⃣ Financial Summary
+<p align="center">
+  <img src="screenshots/fifth.png" width="75%">
+</p>
 
-- Store Data Persistenly
-![10](screenshots/tenth.png)
+---
+
+### 6️⃣ Filter Transactions
+<p align="center">
+  <img src="screenshots/sixth.png" width="75%">
+</p>
+
+---
+
+### 7️⃣ Monthly Report
+<p align="center">
+  <img src="screenshots/seventh.png" width="75%">
+</p>
+
+---
+
+### 8️⃣ Export to CSV
+<p align="center">
+  <img src="screenshots/eigtth.png" width="75%">
+</p>
+
+---
+
+### 9️⃣ JSON Data
+<p align="center">
+  <img src="screenshots/ninth.png" width="75%">
+</p>
+
+---
+
+### 🔟 Store Data Persistently
+<p align="center">
+  <img src="screenshots/tenth.png" width="75%">
+</p>
+
 
 ## 🚀 Features
 
